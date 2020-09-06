@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendering HTML File</title>
+    <style>
+        *{
+            background: #CAFAFE
+
+        }
+        ul{
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <button id="button">Show Data</button>
+    <br>
+    <h1>Github Users</h1>
+    <div id="info"></div>
+
+    <script>
+        document.getElementById('button').addEventListener('click', showData);
+        function showData() {
+            var req = new XMLHttpRequest();
+            req.open('GET', 'https://api.github.com/users', true);
+            req.onload = function(){
+                if(req.status==200){
+                    var people = JSON.parse(req.responseText)
+                    var display= ' ';
+                    for(var i in people){
+                    display +=
+                    '<div class="a">' +
+                    // '<img src="'+people[i].avatar_url+'">'+
+
+
+                        '<div style="margin-left: 40px; float:left;">' +
+                        '<img src="'+people[i].avatar_url+'" width="170px" height="170px">' +
+                    '</div>' +
+
+
+                    '<ol>ID : '+people[i].id+'</ol>' +
+                    '<ol>Login : '+people[i].login+'</ol>' +
+                    '<ol>Repos : '+people[i].repos_url+'</ol>' +
+                    '<ol>Followers : '+people[i].followers_url+'</ol>' +
+                    '<ol>Following : '+people[i].following_url+'</ol>' +
+
+                    '</div>';
+
+                    }
+                    document.getElementById('info').innerHTML=display;
+                }
+            }
+            req.send();
+        }
+    </script>
+</body>
+</html>
